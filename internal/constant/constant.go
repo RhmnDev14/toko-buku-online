@@ -1,6 +1,16 @@
 package constant
 
 const (
+	// role
+	Admin = "admin"
+	User  = "user"
+	// method
+	GET     = "get"
+	PUT     = "put"
+	DELETE  = "delete"
+	CREATE  = "create"
+	GETBOOK = "get book"
+	ORDER   = "order"
 	//message grpc
 	Succes = "Succes"
 	// error db
@@ -12,4 +22,5 @@ const (
 	// error be
 	ErrorInternalSystem = "maaf, terjadi kesalahan pada sistem. Silahkan coba beberapa saat lagi"
 	ErrorLogin          = "email atau password tidak sesuai"
+	ErrorDontPermission = "maaf, kamu tidak memiliki hak akses"
 )
