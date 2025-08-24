@@ -2,10 +2,10 @@ package service
 
 import (
 	"context"
-	"ecommerce/internal/logger"
-	"ecommerce/internal/shared/constant"
 	"fmt"
 	"time"
+	"toko_buku_online/internal/constant"
+	"toko_buku_online/internal/logger"
 
 	"github.com/redis/go-redis/v9"
 )
