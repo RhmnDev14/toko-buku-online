@@ -10,6 +10,7 @@ import (
 	"toko_buku_online/internal/entity"
 	"toko_buku_online/internal/handler"
 	"toko_buku_online/internal/logger"
+	"toko_buku_online/internal/middleware"
 	"toko_buku_online/internal/repository"
 	"toko_buku_online/internal/service"
 	"toko_buku_online/internal/usecase"
@@ -25,6 +26,7 @@ import (
 type Server struct {
 	log        logger.Logger
 	authUc     usecase.AuhtUc
+	categoryUc usecase.CategoryUc
 	jwtService service.JwtService
 	port       string
 }
@@ -38,10 +40,14 @@ func (s *Server) Run() {
 	}
 
 	grpcServer := grpc.NewServer()
+	cfg := config.NewConfig()
+	middleware := middleware.NewGRPCAuthMiddleware(s.jwtService, s.log, cfg.TokenConfig)
 
 	// Register gRPC handler
 	authHandler := handler.NewAuthHandler(s.authUc, s.log)
+	categoryHandler := handler.NewCategoryHandler(s.log, s.categoryUc, middleware)
 	toko.RegisterAuthServiceServer(grpcServer, authHandler)
+	toko.RegisterCategoryServiceServer(grpcServer, categoryHandler)
 
 	s.log.Info(fmt.Sprintf("gRPC server running on port %s", s.port), nil)
 	// ✅ Aktifkan server reflection
@@ -100,13 +106,21 @@ func NewServer() *Server {
 	log.Info("success connect database", nil)
 
 	// Dependency Injection
+	// repo
 	authRepo := repository.NewAuthRepo(*log, db)
+	categoryRepo := repository.NewCategoryRepo(*log, db)
+
+	// service
 	jwtService := service.NewJwtService(cfg.TokenConfig, *log)
+
+	// uc
 	authUc := usecase.NewAuthUc(authRepo, *log, jwtService)
+	categoryUc := usecase.NewCategoryUc(*log, categoryRepo)
 
 	return &Server{
 		log:        *log,
 		authUc:     authUc,
+		categoryUc: categoryUc,
 		jwtService: jwtService,
 		port:       cfg.ServerPort,
 	}
