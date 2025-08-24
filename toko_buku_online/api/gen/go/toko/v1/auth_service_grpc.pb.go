@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v6.32.0
-// source: api/proto/auth_service.proto
+// source: auth_service.proto
 
 package toko
 
@@ -11,7 +11,6 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
-	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -29,7 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type AuthServiceClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*LoginResponse, error)
-	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterRespone, error)
 }
 
 type authServiceClient struct {
@@ -50,9 +49,9 @@ func (c *authServiceClient) Login(ctx context.Context, in *LoginRequest, opts ..
 	return out, nil
 }
 
-func (c *authServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *authServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*RegisterRespone, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(emptypb.Empty)
+	out := new(RegisterRespone)
 	err := c.cc.Invoke(ctx, AuthService_Register_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -65,7 +64,7 @@ func (c *authServiceClient) Register(ctx context.Context, in *RegisterRequest, o
 // for forward compatibility.
 type AuthServiceServer interface {
 	Login(context.Context, *LoginRequest) (*LoginResponse, error)
-	Register(context.Context, *RegisterRequest) (*emptypb.Empty, error)
+	Register(context.Context, *RegisterRequest) (*RegisterRespone, error)
 	mustEmbedUnimplementedAuthServiceServer()
 }
 
@@ -79,7 +78,7 @@ type UnimplementedAuthServiceServer struct{}
 func (UnimplementedAuthServiceServer) Login(context.Context, *LoginRequest) (*LoginResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedAuthServiceServer) Register(context.Context, *RegisterRequest) (*emptypb.Empty, error) {
+func (UnimplementedAuthServiceServer) Register(context.Context, *RegisterRequest) (*RegisterRespone, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedAuthServiceServer) mustEmbedUnimplementedAuthServiceServer() {}
@@ -156,5 +155,5 @@ var AuthService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "api/proto/auth_service.proto",
+	Metadata: "auth_service.proto",
 }

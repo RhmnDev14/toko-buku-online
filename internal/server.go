@@ -40,7 +40,7 @@ func (s *Server) Run() {
 	grpcServer := grpc.NewServer()
 
 	// Register gRPC handler
-	authHandler := handler.NewAuthHandler(s.authUc)
+	authHandler := handler.NewAuthHandler(s.authUc, s.log)
 	toko.RegisterAuthServiceServer(grpcServer, authHandler)
 
 	s.log.Info(fmt.Sprintf("gRPC server running on port %s", s.port), nil)
@@ -83,7 +83,10 @@ func NewServer() *Server {
 	sqlDB.SetConnMaxLifetime(time.Duration(cfg.MaxLife) * time.Minute)
 	sqlDB.SetConnMaxIdleTime(time.Duration(cfg.MaxIdleTime) * time.Minute)
 
+	db = db.Debug()
+
 	// Auto Migrate
+	//func enum manual dipostgre
 	if err := db.AutoMigrate(
 		&entity.User{},
 		&entity.Category{},
