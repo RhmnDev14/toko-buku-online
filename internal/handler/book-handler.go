@@ -138,7 +138,7 @@ func (h *BookHanlder) GetBooks(ctx context.Context, req *toko.EmptyBook) (*toko.
 func (h *BookHanlder) GetBookById(ctx context.Context, req *toko.EmptyBook) (*toko.BookResponseData, error) {
 	h.log.Info("Create book in handler", req)
 
-	ctx, err := h.middleware.Require(ctx, constant.GET)
+	ctx, err := h.middleware.Require(ctx, constant.GETBOOK)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}

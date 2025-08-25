@@ -29,6 +29,7 @@ type Server struct {
 	categoryUc usecase.CategoryUc
 	bookUc     usecase.BookUc
 	orderUc    usecase.OrderUc
+	reportUc   usecase.ReportUc
 	jwtService service.JwtService
 	port       string
 }
@@ -50,10 +51,12 @@ func (s *Server) Run() {
 	categoryHandler := handler.NewCategoryHandler(s.log, s.categoryUc, middleware)
 	bookHandler := handler.NewBookHandler(s.log, s.bookUc, middleware)
 	orderHandler := handler.NewOrderHandler(s.log, s.orderUc, middleware)
+	reportHandler := handler.NewReportHandler(s.log, s.reportUc, middleware)
 	toko.RegisterAuthServiceServer(grpcServer, authHandler)
 	toko.RegisterCategoryServiceServer(grpcServer, categoryHandler)
 	toko.RegisterBookServiceServer(grpcServer, bookHandler)
 	toko.RegisterOrderServiceServer(grpcServer, orderHandler)
+	toko.RegisterReportServiceServer(grpcServer, reportHandler)
 
 	s.log.Info(fmt.Sprintf("gRPC server running on port %s", s.port), nil)
 	// ✅ Aktifkan server reflection
@@ -117,6 +120,7 @@ func NewServer() *Server {
 	categoryRepo := repository.NewCategoryRepo(*log, db)
 	bookRepo := repository.NewBookRepo(*log, db)
 	orderRepo := repository.NewOrderRepo(*log, db)
+	reportRepo := repository.NewReportRepo(*log, db)
 
 	// service
 	jwtService := service.NewJwtService(cfg.TokenConfig, *log)
@@ -126,6 +130,7 @@ func NewServer() *Server {
 	categoryUc := usecase.NewCategoryUc(*log, categoryRepo)
 	bookUc := usecase.NewBookUc(*log, bookRepo)
 	orderUc := usecase.NewOrderUc(*log, orderRepo, bookRepo)
+	ReportUc := usecase.NewReportUc(*log, reportRepo)
 
 	return &Server{
 		log:        *log,
@@ -133,6 +138,7 @@ func NewServer() *Server {
 		categoryUc: categoryUc,
 		bookUc:     bookUc,
 		orderUc:    orderUc,
+		reportUc:   ReportUc,
 		jwtService: jwtService,
 		port:       cfg.ServerPort,
 	}
