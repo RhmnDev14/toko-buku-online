@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package toko.v1;
+
+option go_package = "toko_buku_online/api/gen/go/toko/v1;toko";
+
+message OrderResponse {
+  string message = 1;
+}
+
+message OrderItem {
+  int32 bookId = 1;
+  double price = 2;
+  int32 quantity = 3;
+}
+
+message OrderRequest {
+  repeated OrderItem orderItems = 1;
+}
+
+service OrderService {
+  rpc CreateOrder(OrderRequest) returns (OrderResponse);
+}

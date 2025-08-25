@@ -4,6 +4,8 @@ const (
 	// role
 	Admin = "admin"
 	User  = "user"
+	// keyCtx
+	UserIDKey = "userID"
 	// method
 	GET     = "get"
 	PUT     = "put"
@@ -11,6 +13,10 @@ const (
 	CREATE  = "create"
 	GETBOOK = "get book"
 	ORDER   = "order"
+	// status pembayaran
+	PENDING   = "PENDING"
+	PAID      = "PAID"
+	CANCELLED = "CANCELLED"
 	//message grpc
 	Succes = "Succes"
 	// error db

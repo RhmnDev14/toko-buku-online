@@ -34,7 +34,7 @@ func NewBookHandler(log logger.Logger, uc usecase.BookUc, middleware middleware.
 func (h *BookHanlder) CreateBook(ctx context.Context, req *toko.BookRequest) (*toko.BookResponse, error) {
 	h.log.Info("Create book in handler", req)
 
-	err := h.middleware.Require(ctx, constant.CREATE)
+	ctx, err := h.middleware.Require(ctx, constant.CREATE)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -62,7 +62,7 @@ func (h *BookHanlder) CreateBook(ctx context.Context, req *toko.BookRequest) (*t
 func (h *BookHanlder) GetBooks(ctx context.Context, req *toko.EmptyBook) (*toko.BookResponseList, error) {
 	h.log.Info("Get categories in handler", req)
 
-	err := h.middleware.Require(ctx, constant.GETBOOK)
+	ctx, err := h.middleware.Require(ctx, constant.GETBOOK)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -138,7 +138,7 @@ func (h *BookHanlder) GetBooks(ctx context.Context, req *toko.EmptyBook) (*toko.
 func (h *BookHanlder) GetBookById(ctx context.Context, req *toko.EmptyBook) (*toko.BookResponseData, error) {
 	h.log.Info("Create book in handler", req)
 
-	err := h.middleware.Require(ctx, constant.GET)
+	ctx, err := h.middleware.Require(ctx, constant.GET)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -171,7 +171,7 @@ func (h *BookHanlder) GetBookById(ctx context.Context, req *toko.EmptyBook) (*to
 func (h *BookHanlder) UpdateBook(ctx context.Context, req *toko.BookRequest) (*toko.BookResponse, error) {
 	h.log.Info("Create book in handler", req)
 
-	err := h.middleware.Require(ctx, constant.PUT)
+	ctx, err := h.middleware.Require(ctx, constant.PUT)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -207,7 +207,7 @@ func (h *BookHanlder) UpdateBook(ctx context.Context, req *toko.BookRequest) (*t
 func (h *BookHanlder) DeleteBook(ctx context.Context, req *toko.EmptyBook) (*toko.BookResponse, error) {
 	h.log.Info("Create book in handler", req)
 
-	err := h.middleware.Require(ctx, constant.PUT)
+	ctx, err := h.middleware.Require(ctx, constant.PUT)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}

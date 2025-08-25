@@ -17,3 +17,11 @@ type OrderItem struct {
 	Quantity int     `gorm:"not null"`
 	Price    float64 `gorm:"type:decimal(10,2);not null"`
 }
+
+func (Order) TableName() string {
+	return "orders"
+}
+
+func (OrderItem) TableName() string {
+	return "order_items"
+}

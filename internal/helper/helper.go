@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"time"
+	"toko_buku_online/internal/constant"
 	"toko_buku_online/internal/dto"
 	"toko_buku_online/internal/entity"
 
@@ -41,7 +42,6 @@ func GetIdFromMetadata(ctx context.Context) (string, error) {
 }
 
 func BookToEntity(dto dto.BookReq) entity.Book {
-	fmt.Printf("DTO : ", dto)
 	return entity.Book{
 		Title:       dto.Title,
 		Author:      dto.Author,
@@ -85,4 +85,31 @@ func GetParamFromMetadata(ctx context.Context) (string, string, string, string, 
 	}
 
 	return src[0], sortBy[0], sortType[0], filter[0], page[0], limit[0], nil
+}
+
+func OrderItemToEntity(dto dto.OrderItem) entity.OrderItem {
+	return entity.OrderItem{
+		BookID:   uint(dto.BookId),
+		Quantity: dto.Quantity,
+		Price:    dto.Price,
+	}
+}
+
+func TotalAmount(o dto.Order) float64 {
+	var total float64
+	for _, item := range o.OrderItems {
+		total += item.Price * float64(item.Quantity)
+	}
+	return total
+}
+
+func OrderToEntity(ctx context.Context, dto dto.Order) entity.Order {
+	total := TotalAmount(dto)
+	userID := ctx.Value(constant.UserIDKey).(int)
+	return entity.Order{
+		UserID:     uint(userID),
+		TotalPrice: total,
+		Status:     constant.PENDING,
+		CreatedAt:  time.Now(),
+	}
 }

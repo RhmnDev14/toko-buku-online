@@ -13,7 +13,7 @@ import (
 )
 
 type AuthMiddleware interface {
-	Require(ctx context.Context, method string) error
+	Require(ctx context.Context, method string) (context.Context, error)
 }
 type authMiddleware struct {
 	jwtService service.JwtService
@@ -29,32 +29,34 @@ func NewGRPCAuthMiddleware(jwt service.JwtService, log logger.Logger, cfg config
 	}
 }
 
-func (a *authMiddleware) Require(ctx context.Context, method string) error {
+func (a *authMiddleware) Require(ctx context.Context, method string) (context.Context, error) {
 	a.log.Info("gRPC RequireToken: Checking token", method)
 
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
-		return fmt.Errorf(constant.ErrorInternalSystem)
+		return ctx, fmt.Errorf(constant.ErrorInternalSystem)
 	}
 
 	authHeaders := md.Get("authorization")
 	if len(authHeaders) == 0 {
-		return fmt.Errorf(constant.ErrorInternalSystem)
+		return ctx, fmt.Errorf(constant.ErrorInternalSystem)
 	}
 
 	tokenHeader := strings.TrimPrefix(authHeaders[0], "Bearer ")
 	if tokenHeader == "" {
-		return fmt.Errorf(constant.ErrorInternalSystem)
+		return ctx, fmt.Errorf(constant.ErrorInternalSystem)
 	}
 
 	claims, err := a.jwtService.DecodeToken(tokenHeader)
 	if err != nil {
-		return fmt.Errorf(constant.ErrorInternalSystem)
+		return ctx, fmt.Errorf(constant.ErrorInternalSystem)
 	}
 
 	if claims.Role == constant.User && (method != constant.ORDER || method != constant.GETBOOK) {
-		return fmt.Errorf(constant.ErrorDontPermission)
+		return ctx, fmt.Errorf(constant.ErrorDontPermission)
 	}
 
-	return nil
+	ctx = context.WithValue(ctx, constant.UserIDKey, claims.UserId)
+
+	return ctx, nil
 }

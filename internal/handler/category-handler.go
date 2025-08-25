@@ -33,7 +33,7 @@ func NewCategoryHandler(log logger.Logger, uc usecase.CategoryUc, middleware mid
 func (h *CategoryHandler) CreateCategory(ctx context.Context, req *toko.CategoryRequest) (*toko.CategoryResponse, error) {
 	h.log.Info("Create category in handler", req)
 
-	err := h.middleware.Require(ctx, constant.CREATE)
+	ctx, err := h.middleware.Require(ctx, constant.CREATE)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -54,7 +54,7 @@ func (h *CategoryHandler) CreateCategory(ctx context.Context, req *toko.Category
 func (h *CategoryHandler) GetCategories(ctx context.Context, req *toko.Empty) (*toko.CategoryResponseList, error) {
 	h.log.Info("Get categories in handler", req)
 
-	err := h.middleware.Require(ctx, constant.GET)
+	ctx, err := h.middleware.Require(ctx, constant.GET)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -79,7 +79,7 @@ func (h *CategoryHandler) GetCategories(ctx context.Context, req *toko.Empty) (*
 func (h *CategoryHandler) UpdateCategory(ctx context.Context, req *toko.CategoryUpdateRequest) (*toko.CategoryResponse, error) {
 	h.log.Info("Create category in handler", req)
 
-	err := h.middleware.Require(ctx, constant.PUT)
+	ctx, err := h.middleware.Require(ctx, constant.PUT)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -109,7 +109,7 @@ func (h *CategoryHandler) UpdateCategory(ctx context.Context, req *toko.Category
 func (h *CategoryHandler) DeleteCategory(ctx context.Context, req *toko.Empty) (*toko.CategoryResponse, error) {
 	h.log.Info("Create category in handler", nil)
 
-	err := h.middleware.Require(ctx, constant.PUT)
+	ctx, err := h.middleware.Require(ctx, constant.PUT)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
