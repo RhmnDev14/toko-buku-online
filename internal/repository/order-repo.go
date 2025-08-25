@@ -16,6 +16,8 @@ type OrderRepo interface {
 	CreateOrderItem(ctx context.Context, tx *gorm.DB, payload entity.OrderItem) error
 	PayOrder(ctx context.Context, payload int) error
 	GetOrders(ctx context.Context) ([]entity.Order, error)
+	GetOrder(ctx context.Context, payload int) (entity.Order, error)
+	GetOrderItem(ctx context.Context, payload int) ([]entity.OrderItem, error)
 }
 
 type orderRepo struct {
@@ -115,4 +117,50 @@ func (r *orderRepo) GetOrders(ctx context.Context) ([]entity.Order, error) {
 	}
 
 	return orders, nil
+}
+
+func (r *orderRepo) GetOrder(ctx context.Context, payload int) (entity.Order, error) {
+	r.log.Info("get order in repo", ctx)
+
+	query := r.db.WithContext(ctx)
+
+	role, ok := ctx.Value(constant.RoleKey).(string)
+	if !ok {
+		return entity.Order{}, fmt.Errorf("role not found in context")
+	}
+	userId, ok := ctx.Value(constant.UserIDKey).(int)
+	if !ok {
+		return entity.Order{}, fmt.Errorf("user id not found in context")
+	}
+
+	if role == constant.User {
+		query = query.Where("user_id = ?", userId)
+	}
+
+	query = query.Where("id = ?", payload)
+
+	var order entity.Order
+	err := query.First(&order).Error
+	if err != nil {
+		r.log.Error("Error : ", err)
+		if err == gorm.ErrRecordNotFound {
+			return entity.Order{}, fmt.Errorf(constant.ErrorDataNotFound)
+		}
+		return entity.Order{}, fmt.Errorf(constant.ErrorServerGet)
+	}
+
+	return order, nil
+}
+
+func (r *orderRepo) GetOrderItem(ctx context.Context, payload int) ([]entity.OrderItem, error) {
+	r.log.Info("get order item item in repo", ctx)
+
+	var orderItem []entity.OrderItem
+	err := r.db.WithContext(ctx).Where("order_id = ?", payload).Order("id desc").Find(&orderItem).Error
+	if err != nil {
+		r.log.Error("Error : ", err)
+		return nil, fmt.Errorf(constant.ErrorServerGet)
+	}
+
+	return orderItem, nil
 }

@@ -18,6 +18,11 @@ type OrderItem struct {
 	Price    float64 `gorm:"type:decimal(10,2);not null"`
 }
 
+type DetailOrder struct {
+	Order     Order       `json:"order"`
+	OrderItem []OrderItem `json:"order_item"`
+}
+
 func (Order) TableName() string {
 	return "orders"
 }

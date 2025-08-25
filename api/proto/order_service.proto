@@ -33,8 +33,22 @@ message OrderList {
     repeated Order Orders = 1;
 }
 
+message OrderItems {
+  uint32 id = 1;
+  uint32 order_id = 2;
+  uint32 book_id = 3;
+  int32 quantity = 4;
+  double price = 5;
+}
+
+message DetailOrderById {
+  Order order = 1;
+  repeated OrderItems orderitems = 2;
+}
+
 service OrderService {
   rpc CreateOrder(OrderRequest) returns (OrderResponse);
   rpc PayOrder(EmptyOrder)returns(OrderResponse);
   rpc GetOrders(EmptyOrder)returns(OrderList);
+  rpc DetailOrder(EmptyOrder)returns(DetailOrderById);
 }

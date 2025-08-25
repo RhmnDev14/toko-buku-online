@@ -32,7 +32,7 @@ func NewOrderHandler(log logger.Logger, uc usecase.OrderUc, middleware middlewar
 }
 
 func (h *OrderHandler) CreateOrder(ctx context.Context, req *toko.OrderRequest) (*toko.OrderResponse, error) {
-	h.log.Info("Create category in handler", req)
+	h.log.Info("Create order in handler", req)
 
 	ctx, err := h.middleware.Require(ctx, constant.ORDER)
 	if err != nil {
@@ -62,7 +62,7 @@ func (h *OrderHandler) CreateOrder(ctx context.Context, req *toko.OrderRequest) 
 	}, nil
 }
 func (h *OrderHandler) PayOrder(ctx context.Context, req *toko.EmptyOrder) (*toko.OrderResponse, error) {
-	h.log.Info("Create category in handler", req)
+	h.log.Info("pay order in handler", req)
 
 	ctx, err := h.middleware.Require(ctx, constant.ORDER)
 	if err != nil {
@@ -88,7 +88,7 @@ func (h *OrderHandler) PayOrder(ctx context.Context, req *toko.EmptyOrder) (*tok
 	}, nil
 }
 func (h *OrderHandler) GetOrders(ctx context.Context, req *toko.EmptyOrder) (*toko.OrderList, error) {
-	h.log.Info("Create category in handler", req)
+	h.log.Info("get orders in handler", req)
 
 	ctx, err := h.middleware.Require(ctx, constant.ORDER)
 	if err != nil {
@@ -113,5 +113,51 @@ func (h *OrderHandler) GetOrders(ctx context.Context, req *toko.EmptyOrder) (*to
 
 	return &toko.OrderList{
 		Orders: protoOrders,
+	}, nil
+}
+func (h *OrderHandler) DetailOrder(ctx context.Context, req *toko.EmptyOrder) (*toko.DetailOrderById, error) {
+	h.log.Info("Create category in handler", req)
+
+	ctx, err := h.middleware.Require(ctx, constant.ORDER)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	ids, err := helper.GetIdFromMetadata(ctx)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+	payload, err := strconv.Atoi(ids)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	orders, err := h.uc.DetailOrder(ctx, payload)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	protoOrder := &toko.Order{
+		Id:         int32(orders.Order.ID),
+		UserId:     int32(orders.Order.UserID),
+		TotalPrice: orders.Order.TotalPrice,
+		Status:     orders.Order.Status,
+		CreatedAt:  timestamppb.New(orders.Order.CreatedAt),
+	}
+
+	var protoItems []*toko.OrderItems
+	for _, oi := range orders.OrderItem {
+		protoItems = append(protoItems, &toko.OrderItems{
+			Id:       uint32(oi.ID),
+			OrderId:  uint32(oi.OrderID),
+			BookId:   uint32(oi.BookID),
+			Quantity: int32(oi.Quantity),
+			Price:    oi.Price,
+		})
+	}
+
+	return &toko.DetailOrderById{
+		Order:      protoOrder,
+		Orderitems: protoItems,
 	}, nil
 }
