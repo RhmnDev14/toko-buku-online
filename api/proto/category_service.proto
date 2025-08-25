@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package toko.v1;
+
+option go_package = "toko_buku_online/api/gen/go/toko/v1;toko";
+
+message CategoryRequest {
+  string name = 1;
+}
+
+message CategoryResponse {
+  string message = 1;
+}
+
+message CategoryResponseData {
+  int32 id = 1;
+  string name = 2;
+}
+
+message CategoryResponseList {
+  repeated CategoryResponseData data = 1;
+}
+
+message Empty {}
+
+message CategoryUpdateRequest {
+  int32 id = 1;
+  string name = 2;
+}
+
+service CategoryService {
+  rpc CreateCategory(CategoryRequest) returns (CategoryResponse);
+  rpc GetCategories(Empty) returns (CategoryResponseList);
+  rpc UpdateCategory(CategoryUpdateRequest) returns (CategoryResponse);
+  rpc DeleteCategory(Empty) returns (CategoryResponse);
+}

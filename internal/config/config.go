@@ -29,9 +29,14 @@ type TokenConfig struct {
 	JwtSigningMethod        *jwt.SigningMethodHMAC `ignored:"true"`
 }
 
+type PortConfig struct {
+	ServerPort string `envconfig:"SERVER_PORT" required:"true"`
+}
+
 type Config struct {
 	DBConfig
 	TokenConfig
+	PortConfig
 }
 
 func (c *Config) validate() error {

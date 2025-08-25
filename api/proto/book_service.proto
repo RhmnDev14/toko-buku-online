@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package toko.v1;
+
+option go_package = "toko_buku_online/api/gen/go/toko/v1;toko";
+
+message BookRequest {
+  string title = 1;
+  string author = 2;
+  double price = 3;
+  int32 stock = 4;
+  int32 year = 5;
+  int32 categoryId = 6;
+  string imageBase64 = 7;
+}
+
+message BookResponse {
+  string message = 1;
+}
+
+message BookResponseData {
+  int32 id = 1;
+  string title = 2;
+  string author = 3;
+  double price = 4;
+  int32 stock = 5;
+  int32 year = 6;
+  int32 categoryId = 7;
+  string imageBase64 = 8;
+}
+
+message MetaData {
+  int32 totalData = 1;
+	int32 totalPage = 2;
+	int32 page = 3;
+	int32 limit = 4;
+}
+
+message BookResponseList {
+  repeated BookResponseData data = 1;
+  MetaData meta = 2;
+}
+
+message EmptyBook {}
+
+service BookService {
+  rpc CreateBook(BookRequest) returns (BookResponse);
+  rpc GetBooks(EmptyBook) returns (BookResponseList);
+  rpc GetBookById(EmptyBook) returns (BookResponseData);
+  rpc UpdateBook(BookRequest) returns (BookResponse);
+  rpc DeleteBook(EmptyBook) returns (BookResponse);
+}

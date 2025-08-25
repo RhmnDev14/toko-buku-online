@@ -1,0 +1,54 @@
+syntax = "proto3";
+
+package toko.v1;
+
+option go_package = "toko_buku_online/api/gen/go/toko/v1;toko";
+import "google/protobuf/timestamp.proto";
+
+message OrderResponse {
+  string message = 1;
+}
+
+message EmptyOrder {}
+
+message OrderItem {
+  int32 bookId = 1;
+  double price = 2;
+  int32 quantity = 3;
+}
+
+message OrderRequest {
+  repeated OrderItem orderItems = 1;
+}
+
+message Order {
+    int32 id = 1;
+    int32 user_id = 2;
+    double total_price = 3;
+    string status = 4;
+    google.protobuf.Timestamp created_at = 5;
+}
+
+message OrderList {
+    repeated Order Orders = 1;
+}
+
+message OrderItems {
+  uint32 id = 1;
+  uint32 order_id = 2;
+  uint32 book_id = 3;
+  int32 quantity = 4;
+  double price = 5;
+}
+
+message DetailOrderById {
+  Order order = 1;
+  repeated OrderItems orderitems = 2;
+}
+
+service OrderService {
+  rpc CreateOrder(OrderRequest) returns (OrderResponse);
+  rpc PayOrder(EmptyOrder)returns(OrderResponse);
+  rpc GetOrders(EmptyOrder)returns(OrderList);
+  rpc DetailOrder(EmptyOrder)returns(DetailOrderById);
+}

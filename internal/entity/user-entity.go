@@ -10,3 +10,7 @@ type User struct {
 	Role      string    `gorm:"type:user_role;not null;default:'user'"`
 	CreatedAt time.Time `gorm:"autoCreateTime"`
 }
+
+func (User) TableName() string {
+	return "users"
+}

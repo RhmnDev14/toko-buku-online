@@ -1,0 +1,34 @@
+syntax = "proto3";
+
+package toko.v1;
+
+option go_package = "toko_buku_online/api/gen/go/toko/v1;toko";
+
+message SalesReport {
+  double omset = 1;
+  int32 total_buku_terjual = 2;
+}
+
+message BestBook {
+  int32 id = 1;
+  string title = 2;
+}
+
+message BestSellerReport {
+  repeated BestBook buku = 1;
+}
+
+message PriceReport {
+  double max = 1;
+  double min = 2;
+  double avg = 3;
+}
+
+message EmptyReport {}
+
+service ReportService {
+  rpc GetSalesReport(EmptyReport) returns (SalesReport);
+  rpc GetBestSeller(EmptyReport) returns (BestSellerReport);
+  rpc GetPriceReport(EmptyReport) returns (PriceReport);
+}
+

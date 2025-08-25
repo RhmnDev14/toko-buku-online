@@ -10,3 +10,7 @@ type Book struct {
 	CategoryID  uint   `gorm:"index;not null"`
 	ImageBase64 string `gorm:"type:text"`
 }
+
+func (Book) TableName() string {
+	return "books"
+}
