@@ -8,6 +8,8 @@ message OrderResponse {
   string message = 1;
 }
 
+message EmptyOrder {}
+
 message OrderItem {
   int32 bookId = 1;
   double price = 2;
@@ -20,4 +22,5 @@ message OrderRequest {
 
 service OrderService {
   rpc CreateOrder(OrderRequest) returns (OrderResponse);
+  rpc PayOrder(EmptyOrder)returns(OrderResponse);
 }

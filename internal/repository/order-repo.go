@@ -14,6 +14,7 @@ type OrderRepo interface {
 	Begin() *gorm.DB
 	CreateOrder(ctx context.Context, tx *gorm.DB, payload entity.Order) (entity.Order, error)
 	CreateOrderItem(ctx context.Context, tx *gorm.DB, payload entity.OrderItem) error
+	PayOrder(ctx context.Context, payload int) error
 }
 
 type orderRepo struct {
@@ -62,5 +63,27 @@ func (r *orderRepo) CreateOrderItem(ctx context.Context, tx *gorm.DB, payload en
 		r.log.Error("Error : ", err)
 		return fmt.Errorf(constant.ErrorServerCreate)
 	}
+	return nil
+}
+
+func (r *orderRepo) PayOrder(ctx context.Context, payload int) error {
+	r.log.Info("pay order in repo", payload)
+
+	result := r.db.WithContext(ctx).
+		Model(&entity.Order{}).
+		Where("id = ?", payload).
+		Updates(map[string]interface{}{
+			"status": constant.PAID,
+		})
+
+	if result.Error != nil {
+		r.log.Error("Error : ", result.Error)
+		return fmt.Errorf(constant.ErrorServerUpdate)
+	}
+
+	if result.RowsAffected == 0 {
+		return fmt.Errorf(constant.ErrorDataNotFound)
+	}
+
 	return nil
 }

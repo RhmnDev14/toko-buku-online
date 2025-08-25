@@ -12,6 +12,7 @@ import (
 
 type OrderUc interface {
 	CreateOrder(ctx context.Context, payload dto.Order) error
+	PayOrder(ctx context.Context, payload int) error
 }
 
 type orderUc struct {
@@ -61,4 +62,9 @@ func (u *orderUc) CreateOrder(ctx context.Context, payload dto.Order) error {
 	}
 	tx.Commit()
 	return nil
+}
+
+func (u *orderUc) PayOrder(ctx context.Context, payload int) error {
+	u.log.Info("pay order in uc", payload)
+	return u.orderRepo.PayOrder(ctx, payload)
 }

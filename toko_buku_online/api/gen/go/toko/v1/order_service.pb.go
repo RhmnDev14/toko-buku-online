@@ -65,6 +65,42 @@ func (x *OrderResponse) GetMessage() string {
 	return ""
 }
 
+type EmptyOrder struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *EmptyOrder) Reset() {
+	*x = EmptyOrder{}
+	mi := &file_order_service_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *EmptyOrder) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*EmptyOrder) ProtoMessage() {}
+
+func (x *EmptyOrder) ProtoReflect() protoreflect.Message {
+	mi := &file_order_service_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use EmptyOrder.ProtoReflect.Descriptor instead.
+func (*EmptyOrder) Descriptor() ([]byte, []int) {
+	return file_order_service_proto_rawDescGZIP(), []int{1}
+}
+
 type OrderItem struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	BookId        int32                  `protobuf:"varint,1,opt,name=bookId,proto3" json:"bookId,omitempty"`
@@ -76,7 +112,7 @@ type OrderItem struct {
 
 func (x *OrderItem) Reset() {
 	*x = OrderItem{}
-	mi := &file_order_service_proto_msgTypes[1]
+	mi := &file_order_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -88,7 +124,7 @@ func (x *OrderItem) String() string {
 func (*OrderItem) ProtoMessage() {}
 
 func (x *OrderItem) ProtoReflect() protoreflect.Message {
-	mi := &file_order_service_proto_msgTypes[1]
+	mi := &file_order_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -101,7 +137,7 @@ func (x *OrderItem) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderItem.ProtoReflect.Descriptor instead.
 func (*OrderItem) Descriptor() ([]byte, []int) {
-	return file_order_service_proto_rawDescGZIP(), []int{1}
+	return file_order_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *OrderItem) GetBookId() int32 {
@@ -134,7 +170,7 @@ type OrderRequest struct {
 
 func (x *OrderRequest) Reset() {
 	*x = OrderRequest{}
-	mi := &file_order_service_proto_msgTypes[2]
+	mi := &file_order_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -146,7 +182,7 @@ func (x *OrderRequest) String() string {
 func (*OrderRequest) ProtoMessage() {}
 
 func (x *OrderRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_order_service_proto_msgTypes[2]
+	mi := &file_order_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -159,7 +195,7 @@ func (x *OrderRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OrderRequest.ProtoReflect.Descriptor instead.
 func (*OrderRequest) Descriptor() ([]byte, []int) {
-	return file_order_service_proto_rawDescGZIP(), []int{2}
+	return file_order_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *OrderRequest) GetOrderItems() []*OrderItem {
@@ -175,7 +211,9 @@ const file_order_service_proto_rawDesc = "" +
 	"\n" +
 	"\x13order_service.proto\x12\atoko.v1\")\n" +
 	"\rOrderResponse\x12\x18\n" +
-	"\amessage\x18\x01 \x01(\tR\amessage\"U\n" +
+	"\amessage\x18\x01 \x01(\tR\amessage\"\f\n" +
+	"\n" +
+	"EmptyOrder\"U\n" +
 	"\tOrderItem\x12\x16\n" +
 	"\x06bookId\x18\x01 \x01(\x05R\x06bookId\x12\x14\n" +
 	"\x05price\x18\x02 \x01(\x01R\x05price\x12\x1a\n" +
@@ -183,9 +221,10 @@ const file_order_service_proto_rawDesc = "" +
 	"\fOrderRequest\x122\n" +
 	"\n" +
 	"orderItems\x18\x01 \x03(\v2\x12.toko.v1.OrderItemR\n" +
-	"orderItems2L\n" +
+	"orderItems2\x85\x01\n" +
 	"\fOrderService\x12<\n" +
-	"\vCreateOrder\x12\x15.toko.v1.OrderRequest\x1a\x16.toko.v1.OrderResponseB*Z(toko_buku_online/api/gen/go/toko/v1;tokob\x06proto3"
+	"\vCreateOrder\x12\x15.toko.v1.OrderRequest\x1a\x16.toko.v1.OrderResponse\x127\n" +
+	"\bPayOrder\x12\x13.toko.v1.EmptyOrder\x1a\x16.toko.v1.OrderResponseB*Z(toko_buku_online/api/gen/go/toko/v1;tokob\x06proto3"
 
 var (
 	file_order_service_proto_rawDescOnce sync.Once
@@ -199,18 +238,21 @@ func file_order_service_proto_rawDescGZIP() []byte {
 	return file_order_service_proto_rawDescData
 }
 
-var file_order_service_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_order_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
 var file_order_service_proto_goTypes = []any{
 	(*OrderResponse)(nil), // 0: toko.v1.OrderResponse
-	(*OrderItem)(nil),     // 1: toko.v1.OrderItem
-	(*OrderRequest)(nil),  // 2: toko.v1.OrderRequest
+	(*EmptyOrder)(nil),    // 1: toko.v1.EmptyOrder
+	(*OrderItem)(nil),     // 2: toko.v1.OrderItem
+	(*OrderRequest)(nil),  // 3: toko.v1.OrderRequest
 }
 var file_order_service_proto_depIdxs = []int32{
-	1, // 0: toko.v1.OrderRequest.orderItems:type_name -> toko.v1.OrderItem
-	2, // 1: toko.v1.OrderService.CreateOrder:input_type -> toko.v1.OrderRequest
-	0, // 2: toko.v1.OrderService.CreateOrder:output_type -> toko.v1.OrderResponse
-	2, // [2:3] is the sub-list for method output_type
-	1, // [1:2] is the sub-list for method input_type
+	2, // 0: toko.v1.OrderRequest.orderItems:type_name -> toko.v1.OrderItem
+	3, // 1: toko.v1.OrderService.CreateOrder:input_type -> toko.v1.OrderRequest
+	1, // 2: toko.v1.OrderService.PayOrder:input_type -> toko.v1.EmptyOrder
+	0, // 3: toko.v1.OrderService.CreateOrder:output_type -> toko.v1.OrderResponse
+	0, // 4: toko.v1.OrderService.PayOrder:output_type -> toko.v1.OrderResponse
+	3, // [3:5] is the sub-list for method output_type
+	1, // [1:3] is the sub-list for method input_type
 	1, // [1:1] is the sub-list for extension type_name
 	1, // [1:1] is the sub-list for extension extendee
 	0, // [0:1] is the sub-list for field type_name
@@ -227,7 +269,7 @@ func file_order_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_order_service_proto_rawDesc), len(file_order_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   3,
+			NumMessages:   4,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
