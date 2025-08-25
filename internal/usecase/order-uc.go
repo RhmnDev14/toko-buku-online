@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"toko_buku_online/internal/constant"
 	"toko_buku_online/internal/dto"
+	"toko_buku_online/internal/entity"
 	"toko_buku_online/internal/helper"
 	"toko_buku_online/internal/logger"
 	"toko_buku_online/internal/repository"
@@ -13,6 +14,7 @@ import (
 type OrderUc interface {
 	CreateOrder(ctx context.Context, payload dto.Order) error
 	PayOrder(ctx context.Context, payload int) error
+	GetOrders(ctx context.Context) ([]entity.Order, error)
 }
 
 type orderUc struct {
@@ -67,4 +69,9 @@ func (u *orderUc) CreateOrder(ctx context.Context, payload dto.Order) error {
 func (u *orderUc) PayOrder(ctx context.Context, payload int) error {
 	u.log.Info("pay order in uc", payload)
 	return u.orderRepo.PayOrder(ctx, payload)
+}
+
+func (u *orderUc) GetOrders(ctx context.Context) ([]entity.Order, error) {
+	u.log.Info("get orders in uc", ctx)
+	return u.orderRepo.GetOrders(ctx)
 }

@@ -6,6 +6,7 @@ const (
 	User  = "user"
 	// keyCtx
 	UserIDKey = "userID"
+	RoleKey   = "role"
 	// method
 	GET     = "get"
 	PUT     = "put"

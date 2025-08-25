@@ -15,6 +15,7 @@ type OrderRepo interface {
 	CreateOrder(ctx context.Context, tx *gorm.DB, payload entity.Order) (entity.Order, error)
 	CreateOrderItem(ctx context.Context, tx *gorm.DB, payload entity.OrderItem) error
 	PayOrder(ctx context.Context, payload int) error
+	GetOrders(ctx context.Context) ([]entity.Order, error)
 }
 
 type orderRepo struct {
@@ -86,4 +87,32 @@ func (r *orderRepo) PayOrder(ctx context.Context, payload int) error {
 	}
 
 	return nil
+}
+
+func (r *orderRepo) GetOrders(ctx context.Context) ([]entity.Order, error) {
+	r.log.Info("get orders in repo", ctx)
+
+	query := r.db.WithContext(ctx)
+
+	role, ok := ctx.Value(constant.RoleKey).(string)
+	if !ok {
+		return nil, fmt.Errorf("role not found in context")
+	}
+	userId, ok := ctx.Value(constant.UserIDKey).(int)
+	if !ok {
+		return nil, fmt.Errorf("user id not found in context")
+	}
+
+	if role == constant.User {
+		query = query.Where("user_id = ?", userId)
+	}
+
+	var orders []entity.Order
+	err := query.Order("id desc").Find(&orders).Error
+	if err != nil {
+		r.log.Error("Error : ", err)
+		return nil, fmt.Errorf(constant.ErrorServerGet)
+	}
+
+	return orders, nil
 }

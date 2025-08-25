@@ -3,6 +3,7 @@ syntax = "proto3";
 package toko.v1;
 
 option go_package = "toko_buku_online/api/gen/go/toko/v1;toko";
+import "google/protobuf/timestamp.proto";
 
 message OrderResponse {
   string message = 1;
@@ -20,7 +21,20 @@ message OrderRequest {
   repeated OrderItem orderItems = 1;
 }
 
+message Order {
+    int32 id = 1;
+    int32 user_id = 2;
+    double total_price = 3;
+    string status = 4;
+    google.protobuf.Timestamp created_at = 5;
+}
+
+message OrderList {
+    repeated Order Orders = 1;
+}
+
 service OrderService {
   rpc CreateOrder(OrderRequest) returns (OrderResponse);
   rpc PayOrder(EmptyOrder)returns(OrderResponse);
+  rpc GetOrders(EmptyOrder)returns(OrderList);
 }

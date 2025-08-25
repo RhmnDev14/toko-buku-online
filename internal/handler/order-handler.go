@@ -13,6 +13,7 @@ import (
 
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 type OrderHandler struct {
@@ -33,7 +34,7 @@ func NewOrderHandler(log logger.Logger, uc usecase.OrderUc, middleware middlewar
 func (h *OrderHandler) CreateOrder(ctx context.Context, req *toko.OrderRequest) (*toko.OrderResponse, error) {
 	h.log.Info("Create category in handler", req)
 
-	ctx, err := h.middleware.Require(ctx, constant.CREATE)
+	ctx, err := h.middleware.Require(ctx, constant.ORDER)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -63,7 +64,7 @@ func (h *OrderHandler) CreateOrder(ctx context.Context, req *toko.OrderRequest) 
 func (h *OrderHandler) PayOrder(ctx context.Context, req *toko.EmptyOrder) (*toko.OrderResponse, error) {
 	h.log.Info("Create category in handler", req)
 
-	ctx, err := h.middleware.Require(ctx, constant.PUT)
+	ctx, err := h.middleware.Require(ctx, constant.ORDER)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
 	}
@@ -84,5 +85,33 @@ func (h *OrderHandler) PayOrder(ctx context.Context, req *toko.EmptyOrder) (*tok
 
 	return &toko.OrderResponse{
 		Message: constant.Succes,
+	}, nil
+}
+func (h *OrderHandler) GetOrders(ctx context.Context, req *toko.EmptyOrder) (*toko.OrderList, error) {
+	h.log.Info("Create category in handler", req)
+
+	ctx, err := h.middleware.Require(ctx, constant.ORDER)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	orders, err := h.uc.GetOrders(ctx)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	var protoOrders []*toko.Order
+	for _, o := range orders {
+		protoOrders = append(protoOrders, &toko.Order{
+			Id:         int32(o.ID),
+			UserId:     int32(o.UserID),
+			TotalPrice: o.TotalPrice,
+			Status:     o.Status,
+			CreatedAt:  timestamppb.New(o.CreatedAt),
+		})
+	}
+
+	return &toko.OrderList{
+		Orders: protoOrders,
 	}, nil
 }

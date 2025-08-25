@@ -9,6 +9,7 @@ package toko
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	timestamppb "google.golang.org/protobuf/types/known/timestamppb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -205,11 +206,131 @@ func (x *OrderRequest) GetOrderItems() []*OrderItem {
 	return nil
 }
 
+type Order struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            int32                  `protobuf:"varint,1,opt,name=id,proto3" json:"id,omitempty"`
+	UserId        int32                  `protobuf:"varint,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	TotalPrice    float64                `protobuf:"fixed64,3,opt,name=total_price,json=totalPrice,proto3" json:"total_price,omitempty"`
+	Status        string                 `protobuf:"bytes,4,opt,name=status,proto3" json:"status,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *Order) Reset() {
+	*x = Order{}
+	mi := &file_order_service_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Order) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Order) ProtoMessage() {}
+
+func (x *Order) ProtoReflect() protoreflect.Message {
+	mi := &file_order_service_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Order.ProtoReflect.Descriptor instead.
+func (*Order) Descriptor() ([]byte, []int) {
+	return file_order_service_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *Order) GetId() int32 {
+	if x != nil {
+		return x.Id
+	}
+	return 0
+}
+
+func (x *Order) GetUserId() int32 {
+	if x != nil {
+		return x.UserId
+	}
+	return 0
+}
+
+func (x *Order) GetTotalPrice() float64 {
+	if x != nil {
+		return x.TotalPrice
+	}
+	return 0
+}
+
+func (x *Order) GetStatus() string {
+	if x != nil {
+		return x.Status
+	}
+	return ""
+}
+
+func (x *Order) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+type OrderList struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Orders        []*Order               `protobuf:"bytes,1,rep,name=Orders,proto3" json:"Orders,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OrderList) Reset() {
+	*x = OrderList{}
+	mi := &file_order_service_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OrderList) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OrderList) ProtoMessage() {}
+
+func (x *OrderList) ProtoReflect() protoreflect.Message {
+	mi := &file_order_service_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OrderList.ProtoReflect.Descriptor instead.
+func (*OrderList) Descriptor() ([]byte, []int) {
+	return file_order_service_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *OrderList) GetOrders() []*Order {
+	if x != nil {
+		return x.Orders
+	}
+	return nil
+}
+
 var File_order_service_proto protoreflect.FileDescriptor
 
 const file_order_service_proto_rawDesc = "" +
 	"\n" +
-	"\x13order_service.proto\x12\atoko.v1\")\n" +
+	"\x13order_service.proto\x12\atoko.v1\x1a\x1fgoogle/protobuf/timestamp.proto\")\n" +
 	"\rOrderResponse\x12\x18\n" +
 	"\amessage\x18\x01 \x01(\tR\amessage\"\f\n" +
 	"\n" +
@@ -221,10 +342,21 @@ const file_order_service_proto_rawDesc = "" +
 	"\fOrderRequest\x122\n" +
 	"\n" +
 	"orderItems\x18\x01 \x03(\v2\x12.toko.v1.OrderItemR\n" +
-	"orderItems2\x85\x01\n" +
+	"orderItems\"\xa4\x01\n" +
+	"\x05Order\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\x05R\x02id\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\x05R\x06userId\x12\x1f\n" +
+	"\vtotal_price\x18\x03 \x01(\x01R\n" +
+	"totalPrice\x12\x16\n" +
+	"\x06status\x18\x04 \x01(\tR\x06status\x129\n" +
+	"\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"3\n" +
+	"\tOrderList\x12&\n" +
+	"\x06Orders\x18\x01 \x03(\v2\x0e.toko.v1.OrderR\x06Orders2\xbb\x01\n" +
 	"\fOrderService\x12<\n" +
 	"\vCreateOrder\x12\x15.toko.v1.OrderRequest\x1a\x16.toko.v1.OrderResponse\x127\n" +
-	"\bPayOrder\x12\x13.toko.v1.EmptyOrder\x1a\x16.toko.v1.OrderResponseB*Z(toko_buku_online/api/gen/go/toko/v1;tokob\x06proto3"
+	"\bPayOrder\x12\x13.toko.v1.EmptyOrder\x1a\x16.toko.v1.OrderResponse\x124\n" +
+	"\tGetOrders\x12\x13.toko.v1.EmptyOrder\x1a\x12.toko.v1.OrderListB*Z(toko_buku_online/api/gen/go/toko/v1;tokob\x06proto3"
 
 var (
 	file_order_service_proto_rawDescOnce sync.Once
@@ -238,24 +370,31 @@ func file_order_service_proto_rawDescGZIP() []byte {
 	return file_order_service_proto_rawDescData
 }
 
-var file_order_service_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_order_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
 var file_order_service_proto_goTypes = []any{
-	(*OrderResponse)(nil), // 0: toko.v1.OrderResponse
-	(*EmptyOrder)(nil),    // 1: toko.v1.EmptyOrder
-	(*OrderItem)(nil),     // 2: toko.v1.OrderItem
-	(*OrderRequest)(nil),  // 3: toko.v1.OrderRequest
+	(*OrderResponse)(nil),         // 0: toko.v1.OrderResponse
+	(*EmptyOrder)(nil),            // 1: toko.v1.EmptyOrder
+	(*OrderItem)(nil),             // 2: toko.v1.OrderItem
+	(*OrderRequest)(nil),          // 3: toko.v1.OrderRequest
+	(*Order)(nil),                 // 4: toko.v1.Order
+	(*OrderList)(nil),             // 5: toko.v1.OrderList
+	(*timestamppb.Timestamp)(nil), // 6: google.protobuf.Timestamp
 }
 var file_order_service_proto_depIdxs = []int32{
 	2, // 0: toko.v1.OrderRequest.orderItems:type_name -> toko.v1.OrderItem
-	3, // 1: toko.v1.OrderService.CreateOrder:input_type -> toko.v1.OrderRequest
-	1, // 2: toko.v1.OrderService.PayOrder:input_type -> toko.v1.EmptyOrder
-	0, // 3: toko.v1.OrderService.CreateOrder:output_type -> toko.v1.OrderResponse
-	0, // 4: toko.v1.OrderService.PayOrder:output_type -> toko.v1.OrderResponse
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	6, // 1: toko.v1.Order.created_at:type_name -> google.protobuf.Timestamp
+	4, // 2: toko.v1.OrderList.Orders:type_name -> toko.v1.Order
+	3, // 3: toko.v1.OrderService.CreateOrder:input_type -> toko.v1.OrderRequest
+	1, // 4: toko.v1.OrderService.PayOrder:input_type -> toko.v1.EmptyOrder
+	1, // 5: toko.v1.OrderService.GetOrders:input_type -> toko.v1.EmptyOrder
+	0, // 6: toko.v1.OrderService.CreateOrder:output_type -> toko.v1.OrderResponse
+	0, // 7: toko.v1.OrderService.PayOrder:output_type -> toko.v1.OrderResponse
+	5, // 8: toko.v1.OrderService.GetOrders:output_type -> toko.v1.OrderList
+	6, // [6:9] is the sub-list for method output_type
+	3, // [3:6] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_order_service_proto_init() }
@@ -269,7 +408,7 @@ func file_order_service_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_order_service_proto_rawDesc), len(file_order_service_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   4,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

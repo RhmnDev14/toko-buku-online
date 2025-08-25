@@ -52,11 +52,12 @@ func (a *authMiddleware) Require(ctx context.Context, method string) (context.Co
 		return ctx, fmt.Errorf(constant.ErrorInternalSystem)
 	}
 
-	if claims.Role == constant.User && (method != constant.ORDER || method != constant.GETBOOK) {
+	if claims.Role == constant.User && (method != constant.ORDER && method != constant.GETBOOK) {
 		return ctx, fmt.Errorf(constant.ErrorDontPermission)
 	}
 
 	ctx = context.WithValue(ctx, constant.UserIDKey, claims.UserId)
+	ctx = context.WithValue(ctx, constant.RoleKey, claims.Role)
 
 	return ctx, nil
 }
