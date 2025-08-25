@@ -39,3 +39,50 @@ func GetIdFromMetadata(ctx context.Context) (string, error) {
 
 	return id[0], nil
 }
+
+func BookToEntity(dto dto.BookReq) entity.Book {
+	fmt.Printf("DTO : ", dto)
+	return entity.Book{
+		Title:       dto.Title,
+		Author:      dto.Author,
+		Price:       dto.Price,
+		Stock:       dto.Stock,
+		Year:        dto.Year,
+		CategoryID:  uint(dto.CategoryId),
+		ImageBase64: dto.ImageBase64,
+	}
+}
+
+func GetParamFromMetadata(ctx context.Context) (string, string, string, string, string, string, error) {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return "", "", "", "", "", "", fmt.Errorf("metadata tidak tersedia")
+	}
+
+	src := md.Get("search")
+	if len(src) == 0 {
+		return "", "", "", "", "", "", fmt.Errorf("search metadata tidak ditemukan")
+	}
+	sortBy := md.Get("sortBy")
+	if len(sortBy) == 0 {
+		return "", "", "", "", "", "", fmt.Errorf("sortBy metadata tidak ditemukan")
+	}
+	sortType := md.Get("sortType")
+	if len(sortType) == 0 {
+		return "", "", "", "", "", "", fmt.Errorf("sortType metadata tidak ditemukan")
+	}
+	filter := md.Get("filter")
+	if len(filter) == 0 {
+		return "", "", "", "", "", "", fmt.Errorf("filter metadata tidak ditemukan")
+	}
+	page := md.Get("page")
+	if len(page) == 0 {
+		return "", "", "", "", "", "", fmt.Errorf("page metadata tidak ditemukan")
+	}
+	limit := md.Get("limit")
+	if len(limit) == 0 {
+		return "", "", "", "", "", "", fmt.Errorf("limit metadata tidak ditemukan")
+	}
+
+	return src[0], sortBy[0], sortType[0], filter[0], page[0], limit[0], nil
+}
