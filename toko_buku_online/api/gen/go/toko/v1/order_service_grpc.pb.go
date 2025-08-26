@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v6.32.0
-// source: order_service.proto
+// source: api/proto/order_service.proto
 
 package toko
 
@@ -231,5 +231,5 @@ var OrderService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "order_service.proto",
+	Metadata: "api/proto/order_service.proto",
 }

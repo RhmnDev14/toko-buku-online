@@ -3,7 +3,6 @@ package usecase
 import (
 	"context"
 	"fmt"
-	"toko_buku_online/internal/constant"
 	"toko_buku_online/internal/dto"
 	"toko_buku_online/internal/entity"
 	"toko_buku_online/internal/helper"
@@ -36,26 +35,53 @@ func (u *orderUc) CreateOrder(ctx context.Context, payload dto.Order) error {
 	u.log.Info("create order in uc", payload)
 
 	tx := u.orderRepo.Begin()
-	order, err := u.orderRepo.CreateOrder(ctx, tx, helper.OrderToEntity(ctx, payload))
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+			panic(r)
+		}
+	}()
+
+	var totals []float64
+	bookPrices := make(map[int]float64)
+
+	for _, v := range payload.OrderItems {
+		price, err := u.bookRepo.GetPrice(ctx, tx, v.BookId)
+		if err != nil {
+			tx.Rollback()
+			return err
+		}
+		bookPrices[v.BookId] = price
+
+		total := price * float64(v.Quantity)
+		totals = append(totals, total)
+	}
+
+	totalAmount := helper.TotalAmount(totals)
+
+	order, err := u.orderRepo.CreateOrder(ctx, tx, helper.OrderToEntity(ctx, payload, totalAmount))
 	if err != nil {
 		tx.Rollback()
 		return err
 	}
+
 	for _, v := range payload.OrderItems {
 		book, err := u.bookRepo.GetBookById(ctx, v.BookId)
 		if err != nil {
-			if err == fmt.Errorf(constant.ErrorDataNotFound) {
-				return fmt.Errorf("buku dengan id %d tidak ditemukan", v.BookId)
-			}
+			tx.Rollback()
 			return err
 		}
 
 		if book.Stock < v.Quantity {
+			tx.Rollback()
 			return fmt.Errorf("buku dengan id %d tidak memiliki stock yang mencukupi", v.BookId)
 		}
 
+		price := bookPrices[v.BookId]
+
 		oi := helper.OrderItemToEntity(v)
 		oi.OrderID = order.ID
+		oi.Price = price * float64(v.Quantity)
 
 		err = u.orderRepo.CreateOrderItem(ctx, tx, oi)
 		if err != nil {
@@ -63,7 +89,11 @@ func (u *orderUc) CreateOrder(ctx context.Context, payload dto.Order) error {
 			return err
 		}
 	}
-	tx.Commit()
+
+	if err := tx.Commit().Error; err != nil {
+		return err
+	}
+
 	return nil
 }
 

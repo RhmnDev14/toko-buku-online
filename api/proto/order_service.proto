@@ -13,8 +13,7 @@ message EmptyOrder {}
 
 message OrderItem {
   int32 bookId = 1;
-  double price = 2;
-  int32 quantity = 3;
+  int32 quantity = 2;
 }
 
 message OrderRequest {

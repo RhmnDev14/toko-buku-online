@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.8
 // 	protoc        v6.32.0
-// source: report_service.proto
+// source: api/proto/report_service.proto
 
 package toko
 
@@ -31,7 +31,7 @@ type SalesReport struct {
 
 func (x *SalesReport) Reset() {
 	*x = SalesReport{}
-	mi := &file_report_service_proto_msgTypes[0]
+	mi := &file_api_proto_report_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -43,7 +43,7 @@ func (x *SalesReport) String() string {
 func (*SalesReport) ProtoMessage() {}
 
 func (x *SalesReport) ProtoReflect() protoreflect.Message {
-	mi := &file_report_service_proto_msgTypes[0]
+	mi := &file_api_proto_report_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,7 +56,7 @@ func (x *SalesReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SalesReport.ProtoReflect.Descriptor instead.
 func (*SalesReport) Descriptor() ([]byte, []int) {
-	return file_report_service_proto_rawDescGZIP(), []int{0}
+	return file_api_proto_report_service_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *SalesReport) GetOmset() float64 {
@@ -83,7 +83,7 @@ type BestBook struct {
 
 func (x *BestBook) Reset() {
 	*x = BestBook{}
-	mi := &file_report_service_proto_msgTypes[1]
+	mi := &file_api_proto_report_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -95,7 +95,7 @@ func (x *BestBook) String() string {
 func (*BestBook) ProtoMessage() {}
 
 func (x *BestBook) ProtoReflect() protoreflect.Message {
-	mi := &file_report_service_proto_msgTypes[1]
+	mi := &file_api_proto_report_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -108,7 +108,7 @@ func (x *BestBook) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BestBook.ProtoReflect.Descriptor instead.
 func (*BestBook) Descriptor() ([]byte, []int) {
-	return file_report_service_proto_rawDescGZIP(), []int{1}
+	return file_api_proto_report_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *BestBook) GetId() int32 {
@@ -134,7 +134,7 @@ type BestSellerReport struct {
 
 func (x *BestSellerReport) Reset() {
 	*x = BestSellerReport{}
-	mi := &file_report_service_proto_msgTypes[2]
+	mi := &file_api_proto_report_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -146,7 +146,7 @@ func (x *BestSellerReport) String() string {
 func (*BestSellerReport) ProtoMessage() {}
 
 func (x *BestSellerReport) ProtoReflect() protoreflect.Message {
-	mi := &file_report_service_proto_msgTypes[2]
+	mi := &file_api_proto_report_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -159,7 +159,7 @@ func (x *BestSellerReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BestSellerReport.ProtoReflect.Descriptor instead.
 func (*BestSellerReport) Descriptor() ([]byte, []int) {
-	return file_report_service_proto_rawDescGZIP(), []int{2}
+	return file_api_proto_report_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *BestSellerReport) GetBuku() []*BestBook {
@@ -180,7 +180,7 @@ type PriceReport struct {
 
 func (x *PriceReport) Reset() {
 	*x = PriceReport{}
-	mi := &file_report_service_proto_msgTypes[3]
+	mi := &file_api_proto_report_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -192,7 +192,7 @@ func (x *PriceReport) String() string {
 func (*PriceReport) ProtoMessage() {}
 
 func (x *PriceReport) ProtoReflect() protoreflect.Message {
-	mi := &file_report_service_proto_msgTypes[3]
+	mi := &file_api_proto_report_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -205,7 +205,7 @@ func (x *PriceReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PriceReport.ProtoReflect.Descriptor instead.
 func (*PriceReport) Descriptor() ([]byte, []int) {
-	return file_report_service_proto_rawDescGZIP(), []int{3}
+	return file_api_proto_report_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *PriceReport) GetMax() float64 {
@@ -237,7 +237,7 @@ type EmptyReport struct {
 
 func (x *EmptyReport) Reset() {
 	*x = EmptyReport{}
-	mi := &file_report_service_proto_msgTypes[4]
+	mi := &file_api_proto_report_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -249,7 +249,7 @@ func (x *EmptyReport) String() string {
 func (*EmptyReport) ProtoMessage() {}
 
 func (x *EmptyReport) ProtoReflect() protoreflect.Message {
-	mi := &file_report_service_proto_msgTypes[4]
+	mi := &file_api_proto_report_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -262,14 +262,14 @@ func (x *EmptyReport) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EmptyReport.ProtoReflect.Descriptor instead.
 func (*EmptyReport) Descriptor() ([]byte, []int) {
-	return file_report_service_proto_rawDescGZIP(), []int{4}
+	return file_api_proto_report_service_proto_rawDescGZIP(), []int{4}
 }
 
-var File_report_service_proto protoreflect.FileDescriptor
+var File_api_proto_report_service_proto protoreflect.FileDescriptor
 
-const file_report_service_proto_rawDesc = "" +
+const file_api_proto_report_service_proto_rawDesc = "" +
 	"\n" +
-	"\x14report_service.proto\x12\atoko.v1\"Q\n" +
+	"\x1eapi/proto/report_service.proto\x12\atoko.v1\"Q\n" +
 	"\vSalesReport\x12\x14\n" +
 	"\x05omset\x18\x01 \x01(\x01R\x05omset\x12,\n" +
 	"\x12total_buku_terjual\x18\x02 \x01(\x05R\x10totalBukuTerjual\"0\n" +
@@ -289,26 +289,26 @@ const file_report_service_proto_rawDesc = "" +
 	"\x0eGetPriceReport\x12\x14.toko.v1.EmptyReport\x1a\x14.toko.v1.PriceReportB*Z(toko_buku_online/api/gen/go/toko/v1;tokob\x06proto3"
 
 var (
-	file_report_service_proto_rawDescOnce sync.Once
-	file_report_service_proto_rawDescData []byte
+	file_api_proto_report_service_proto_rawDescOnce sync.Once
+	file_api_proto_report_service_proto_rawDescData []byte
 )
 
-func file_report_service_proto_rawDescGZIP() []byte {
-	file_report_service_proto_rawDescOnce.Do(func() {
-		file_report_service_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_report_service_proto_rawDesc), len(file_report_service_proto_rawDesc)))
+func file_api_proto_report_service_proto_rawDescGZIP() []byte {
+	file_api_proto_report_service_proto_rawDescOnce.Do(func() {
+		file_api_proto_report_service_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_api_proto_report_service_proto_rawDesc), len(file_api_proto_report_service_proto_rawDesc)))
 	})
-	return file_report_service_proto_rawDescData
+	return file_api_proto_report_service_proto_rawDescData
 }
 
-var file_report_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
-var file_report_service_proto_goTypes = []any{
+var file_api_proto_report_service_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_api_proto_report_service_proto_goTypes = []any{
 	(*SalesReport)(nil),      // 0: toko.v1.SalesReport
 	(*BestBook)(nil),         // 1: toko.v1.BestBook
 	(*BestSellerReport)(nil), // 2: toko.v1.BestSellerReport
 	(*PriceReport)(nil),      // 3: toko.v1.PriceReport
 	(*EmptyReport)(nil),      // 4: toko.v1.EmptyReport
 }
-var file_report_service_proto_depIdxs = []int32{
+var file_api_proto_report_service_proto_depIdxs = []int32{
 	1, // 0: toko.v1.BestSellerReport.buku:type_name -> toko.v1.BestBook
 	4, // 1: toko.v1.ReportService.GetSalesReport:input_type -> toko.v1.EmptyReport
 	4, // 2: toko.v1.ReportService.GetBestSeller:input_type -> toko.v1.EmptyReport
@@ -323,26 +323,26 @@ var file_report_service_proto_depIdxs = []int32{
 	0, // [0:1] is the sub-list for field type_name
 }
 
-func init() { file_report_service_proto_init() }
-func file_report_service_proto_init() {
-	if File_report_service_proto != nil {
+func init() { file_api_proto_report_service_proto_init() }
+func file_api_proto_report_service_proto_init() {
+	if File_api_proto_report_service_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_report_service_proto_rawDesc), len(file_report_service_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_proto_report_service_proto_rawDesc), len(file_api_proto_report_service_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_report_service_proto_goTypes,
-		DependencyIndexes: file_report_service_proto_depIdxs,
-		MessageInfos:      file_report_service_proto_msgTypes,
+		GoTypes:           file_api_proto_report_service_proto_goTypes,
+		DependencyIndexes: file_api_proto_report_service_proto_depIdxs,
+		MessageInfos:      file_api_proto_report_service_proto_msgTypes,
 	}.Build()
-	File_report_service_proto = out.File
-	file_report_service_proto_goTypes = nil
-	file_report_service_proto_depIdxs = nil
+	File_api_proto_report_service_proto = out.File
+	file_api_proto_report_service_proto_goTypes = nil
+	file_api_proto_report_service_proto_depIdxs = nil
 }

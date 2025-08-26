@@ -17,6 +17,7 @@ type BookRepo interface {
 	GetBookById(ctx context.Context, payload int) (entity.Book, error)
 	UpdateBook(ctx context.Context, id int, payload entity.Book) error
 	DeleteBook(ctx context.Context, payload int) error
+	GetPrice(ctx context.Context, tx *gorm.DB, payload int) (float64, error)
 }
 
 type bookRepo struct {
@@ -165,4 +166,26 @@ func (r *bookRepo) DeleteBook(ctx context.Context, payload int) error {
 		return fmt.Errorf(constant.ErrorServerUpdate)
 	}
 	return nil
+}
+
+func (r *bookRepo) GetPrice(ctx context.Context, tx *gorm.DB, payload int) (float64, error) {
+	r.log.Info("Get price book in repo", payload)
+
+	var price float64
+
+	err := tx.WithContext(ctx).
+		Model(&entity.Book{}).
+		Select("price").
+		Where("id = ?", payload).
+		Scan(&price).Error
+
+	if err != nil {
+		r.log.Error("Error : ", err)
+		if err == gorm.ErrRecordNotFound {
+			return 0, fmt.Errorf(constant.ErrorDataNotFound)
+		}
+		return 0, fmt.Errorf(constant.ErrorServerGet)
+	}
+
+	return price, nil
 }

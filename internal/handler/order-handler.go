@@ -43,7 +43,6 @@ func (h *OrderHandler) CreateOrder(ctx context.Context, req *toko.OrderRequest) 
 	for _, oi := range req.GetOrderItems() {
 		items = append(items, dto.OrderItem{
 			BookId:   int(oi.GetBookId()),
-			Price:    oi.GetPrice(),
 			Quantity: int(oi.GetQuantity()),
 		})
 	}
