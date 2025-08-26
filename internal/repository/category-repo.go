@@ -53,13 +53,30 @@ func (r *categoryRepo) GetCategories(ctx context.Context) ([]entity.Category, er
 func (r *categoryRepo) UpdateCategory(ctx context.Context, id int, payload entity.Category) error {
 	r.log.Info("Update category in repo", payload)
 
-	err := r.db.WithContext(ctx).Where("id = ?", id).Updates(&payload).Error
+	updates := map[string]interface{}{}
+
+	if payload.Name != "" {
+		updates["name"] = payload.Name
+	}
+
+	if len(updates) == 0 {
+		r.log.Info("No fields to update, skip update", payload)
+		return nil
+	}
+
+	err := r.db.WithContext(ctx).
+		Model(&entity.Category{}).
+		Where("id = ?", id).
+		Updates(updates).Error
+
 	if err != nil {
 		r.log.Error("Error : ", err)
 		return fmt.Errorf(constant.ErrorServerUpdate)
 	}
+
 	return nil
 }
+
 func (r *categoryRepo) DeleteCategory(ctx context.Context, payload int) error {
 	r.log.Info("Update category in repo", payload)
 
