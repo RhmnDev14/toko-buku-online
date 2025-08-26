@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.8
 // 	protoc        v6.32.0
-// source: book_service.proto
+// source: api/proto/book_service.proto
 
 package toko
 
@@ -36,7 +36,7 @@ type BookRequest struct {
 
 func (x *BookRequest) Reset() {
 	*x = BookRequest{}
-	mi := &file_book_service_proto_msgTypes[0]
+	mi := &file_api_proto_book_service_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -48,7 +48,7 @@ func (x *BookRequest) String() string {
 func (*BookRequest) ProtoMessage() {}
 
 func (x *BookRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_book_service_proto_msgTypes[0]
+	mi := &file_api_proto_book_service_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -61,7 +61,7 @@ func (x *BookRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BookRequest.ProtoReflect.Descriptor instead.
 func (*BookRequest) Descriptor() ([]byte, []int) {
-	return file_book_service_proto_rawDescGZIP(), []int{0}
+	return file_api_proto_book_service_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *BookRequest) GetTitle() string {
@@ -122,7 +122,7 @@ type BookResponse struct {
 
 func (x *BookResponse) Reset() {
 	*x = BookResponse{}
-	mi := &file_book_service_proto_msgTypes[1]
+	mi := &file_api_proto_book_service_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -134,7 +134,7 @@ func (x *BookResponse) String() string {
 func (*BookResponse) ProtoMessage() {}
 
 func (x *BookResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_book_service_proto_msgTypes[1]
+	mi := &file_api_proto_book_service_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -147,7 +147,7 @@ func (x *BookResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BookResponse.ProtoReflect.Descriptor instead.
 func (*BookResponse) Descriptor() ([]byte, []int) {
-	return file_book_service_proto_rawDescGZIP(), []int{1}
+	return file_api_proto_book_service_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *BookResponse) GetMessage() string {
@@ -173,7 +173,7 @@ type BookResponseData struct {
 
 func (x *BookResponseData) Reset() {
 	*x = BookResponseData{}
-	mi := &file_book_service_proto_msgTypes[2]
+	mi := &file_api_proto_book_service_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -185,7 +185,7 @@ func (x *BookResponseData) String() string {
 func (*BookResponseData) ProtoMessage() {}
 
 func (x *BookResponseData) ProtoReflect() protoreflect.Message {
-	mi := &file_book_service_proto_msgTypes[2]
+	mi := &file_api_proto_book_service_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -198,7 +198,7 @@ func (x *BookResponseData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BookResponseData.ProtoReflect.Descriptor instead.
 func (*BookResponseData) Descriptor() ([]byte, []int) {
-	return file_book_service_proto_rawDescGZIP(), []int{2}
+	return file_api_proto_book_service_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *BookResponseData) GetId() int32 {
@@ -269,7 +269,7 @@ type MetaData struct {
 
 func (x *MetaData) Reset() {
 	*x = MetaData{}
-	mi := &file_book_service_proto_msgTypes[3]
+	mi := &file_api_proto_book_service_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -281,7 +281,7 @@ func (x *MetaData) String() string {
 func (*MetaData) ProtoMessage() {}
 
 func (x *MetaData) ProtoReflect() protoreflect.Message {
-	mi := &file_book_service_proto_msgTypes[3]
+	mi := &file_api_proto_book_service_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -294,7 +294,7 @@ func (x *MetaData) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MetaData.ProtoReflect.Descriptor instead.
 func (*MetaData) Descriptor() ([]byte, []int) {
-	return file_book_service_proto_rawDescGZIP(), []int{3}
+	return file_api_proto_book_service_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *MetaData) GetTotalData() int32 {
@@ -335,7 +335,7 @@ type BookResponseList struct {
 
 func (x *BookResponseList) Reset() {
 	*x = BookResponseList{}
-	mi := &file_book_service_proto_msgTypes[4]
+	mi := &file_api_proto_book_service_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -347,7 +347,7 @@ func (x *BookResponseList) String() string {
 func (*BookResponseList) ProtoMessage() {}
 
 func (x *BookResponseList) ProtoReflect() protoreflect.Message {
-	mi := &file_book_service_proto_msgTypes[4]
+	mi := &file_api_proto_book_service_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -360,7 +360,7 @@ func (x *BookResponseList) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use BookResponseList.ProtoReflect.Descriptor instead.
 func (*BookResponseList) Descriptor() ([]byte, []int) {
-	return file_book_service_proto_rawDescGZIP(), []int{4}
+	return file_api_proto_book_service_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *BookResponseList) GetData() []*BookResponseData {
@@ -385,7 +385,7 @@ type EmptyBook struct {
 
 func (x *EmptyBook) Reset() {
 	*x = EmptyBook{}
-	mi := &file_book_service_proto_msgTypes[5]
+	mi := &file_api_proto_book_service_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -397,7 +397,7 @@ func (x *EmptyBook) String() string {
 func (*EmptyBook) ProtoMessage() {}
 
 func (x *EmptyBook) ProtoReflect() protoreflect.Message {
-	mi := &file_book_service_proto_msgTypes[5]
+	mi := &file_api_proto_book_service_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -410,14 +410,14 @@ func (x *EmptyBook) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EmptyBook.ProtoReflect.Descriptor instead.
 func (*EmptyBook) Descriptor() ([]byte, []int) {
-	return file_book_service_proto_rawDescGZIP(), []int{5}
+	return file_api_proto_book_service_proto_rawDescGZIP(), []int{5}
 }
 
-var File_book_service_proto protoreflect.FileDescriptor
+var File_api_proto_book_service_proto protoreflect.FileDescriptor
 
-const file_book_service_proto_rawDesc = "" +
+const file_api_proto_book_service_proto_rawDesc = "" +
 	"\n" +
-	"\x12book_service.proto\x12\atoko.v1\"\xbd\x01\n" +
+	"\x1capi/proto/book_service.proto\x12\atoko.v1\"\xbd\x01\n" +
 	"\vBookRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12\x16\n" +
 	"\x06author\x18\x02 \x01(\tR\x06author\x12\x14\n" +
@@ -461,19 +461,19 @@ const file_book_service_proto_rawDesc = "" +
 	"DeleteBook\x12\x12.toko.v1.EmptyBook\x1a\x15.toko.v1.BookResponseB*Z(toko_buku_online/api/gen/go/toko/v1;tokob\x06proto3"
 
 var (
-	file_book_service_proto_rawDescOnce sync.Once
-	file_book_service_proto_rawDescData []byte
+	file_api_proto_book_service_proto_rawDescOnce sync.Once
+	file_api_proto_book_service_proto_rawDescData []byte
 )
 
-func file_book_service_proto_rawDescGZIP() []byte {
-	file_book_service_proto_rawDescOnce.Do(func() {
-		file_book_service_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_book_service_proto_rawDesc), len(file_book_service_proto_rawDesc)))
+func file_api_proto_book_service_proto_rawDescGZIP() []byte {
+	file_api_proto_book_service_proto_rawDescOnce.Do(func() {
+		file_api_proto_book_service_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_api_proto_book_service_proto_rawDesc), len(file_api_proto_book_service_proto_rawDesc)))
 	})
-	return file_book_service_proto_rawDescData
+	return file_api_proto_book_service_proto_rawDescData
 }
 
-var file_book_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
-var file_book_service_proto_goTypes = []any{
+var file_api_proto_book_service_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_api_proto_book_service_proto_goTypes = []any{
 	(*BookRequest)(nil),      // 0: toko.v1.BookRequest
 	(*BookResponse)(nil),     // 1: toko.v1.BookResponse
 	(*BookResponseData)(nil), // 2: toko.v1.BookResponseData
@@ -481,7 +481,7 @@ var file_book_service_proto_goTypes = []any{
 	(*BookResponseList)(nil), // 4: toko.v1.BookResponseList
 	(*EmptyBook)(nil),        // 5: toko.v1.EmptyBook
 }
-var file_book_service_proto_depIdxs = []int32{
+var file_api_proto_book_service_proto_depIdxs = []int32{
 	2, // 0: toko.v1.BookResponseList.data:type_name -> toko.v1.BookResponseData
 	3, // 1: toko.v1.BookResponseList.meta:type_name -> toko.v1.MetaData
 	0, // 2: toko.v1.BookService.CreateBook:input_type -> toko.v1.BookRequest
@@ -501,26 +501,26 @@ var file_book_service_proto_depIdxs = []int32{
 	0, // [0:2] is the sub-list for field type_name
 }
 
-func init() { file_book_service_proto_init() }
-func file_book_service_proto_init() {
-	if File_book_service_proto != nil {
+func init() { file_api_proto_book_service_proto_init() }
+func file_api_proto_book_service_proto_init() {
+	if File_api_proto_book_service_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_book_service_proto_rawDesc), len(file_book_service_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_api_proto_book_service_proto_rawDesc), len(file_api_proto_book_service_proto_rawDesc)),
 			NumEnums:      0,
 			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_book_service_proto_goTypes,
-		DependencyIndexes: file_book_service_proto_depIdxs,
-		MessageInfos:      file_book_service_proto_msgTypes,
+		GoTypes:           file_api_proto_book_service_proto_goTypes,
+		DependencyIndexes: file_api_proto_book_service_proto_depIdxs,
+		MessageInfos:      file_api_proto_book_service_proto_msgTypes,
 	}.Build()
-	File_book_service_proto = out.File
-	file_book_service_proto_goTypes = nil
-	file_book_service_proto_depIdxs = nil
+	File_api_proto_book_service_proto = out.File
+	file_api_proto_book_service_proto_goTypes = nil
+	file_api_proto_book_service_proto_depIdxs = nil
 }

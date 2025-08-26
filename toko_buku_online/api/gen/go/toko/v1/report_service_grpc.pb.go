@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.5.1
 // - protoc             v6.32.0
-// source: report_service.proto
+// source: api/proto/report_service.proto
 
 package toko
 
@@ -193,5 +193,5 @@ var ReportService_ServiceDesc = grpc.ServiceDesc{
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "report_service.proto",
+	Metadata: "api/proto/report_service.proto",
 }

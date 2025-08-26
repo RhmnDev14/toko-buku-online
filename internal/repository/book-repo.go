@@ -17,6 +17,7 @@ type BookRepo interface {
 	GetBookById(ctx context.Context, payload int) (entity.Book, error)
 	UpdateBook(ctx context.Context, id int, payload entity.Book) error
 	DeleteBook(ctx context.Context, payload int) error
+	GetPrice(ctx context.Context, tx *gorm.DB, payload int) (float64, error)
 }
 
 type bookRepo struct {
@@ -114,13 +115,47 @@ func (r *bookRepo) GetBookById(ctx context.Context, payload int) (entity.Book, e
 func (r *bookRepo) UpdateBook(ctx context.Context, id int, payload entity.Book) error {
 	r.log.Info("update book in repo", id)
 
-	err := r.db.WithContext(ctx).Where("id = ?", id).Updates(&payload).Error
+	updates := map[string]interface{}{}
+
+	if payload.Title != "" {
+		updates["title"] = payload.Title
+	}
+	if payload.Author != "" {
+		updates["author"] = payload.Author
+	}
+	if payload.Price > 0 {
+		updates["price"] = payload.Price
+	}
+	if payload.Stock > 0 {
+		updates["stock"] = payload.Stock
+	}
+	if payload.Year > 0 {
+		updates["year"] = payload.Year
+	}
+	if payload.CategoryID > 0 {
+		updates["category_id"] = payload.CategoryID
+	}
+	if payload.ImageBase64 != "" {
+		updates["image_base64"] = payload.ImageBase64
+	}
+
+	if len(updates) == 0 {
+		r.log.Info("No fields to update, skip update", payload)
+		return nil
+	}
+
+	err := r.db.WithContext(ctx).
+		Model(&entity.Book{}).
+		Where("id = ?", id).
+		Updates(updates).Error
 	if err != nil {
 		r.log.Error("Error : ", err)
 		return fmt.Errorf(constant.ErrorServerUpdate)
 	}
+
 	return nil
 }
+
 func (r *bookRepo) DeleteBook(ctx context.Context, payload int) error {
 	r.log.Info("delete book in repo", payload)
 
@@ -131,4 +166,26 @@ func (r *bookRepo) DeleteBook(ctx context.Context, payload int) error {
 		return fmt.Errorf(constant.ErrorServerUpdate)
 	}
 	return nil
+}
+
+func (r *bookRepo) GetPrice(ctx context.Context, tx *gorm.DB, payload int) (float64, error) {
+	r.log.Info("Get price book in repo", payload)
+
+	var price float64
+
+	err := tx.WithContext(ctx).
+		Model(&entity.Book{}).
+		Select("price").
+		Where("id = ?", payload).
+		Scan(&price).Error
+
+	if err != nil {
+		r.log.Error("Error : ", err)
+		if err == gorm.ErrRecordNotFound {
+			return 0, fmt.Errorf(constant.ErrorDataNotFound)
+		}
+		return 0, fmt.Errorf(constant.ErrorServerGet)
+	}
+
+	return price, nil
 }

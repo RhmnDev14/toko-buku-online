@@ -1,11 +1,10 @@
 package dto
 
 type Order struct {
-	OrderItems []OrderItem
+	OrderItems []OrderItem `json:"orderItems"`
 }
 
 type OrderItem struct {
-	BookId   int
-	Price    float64
-	Quantity int
+	BookId   int `json:"bookId"`
+	Quantity int `json:"quantity"`
 }

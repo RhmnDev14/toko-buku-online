@@ -91,20 +91,18 @@ func OrderItemToEntity(dto dto.OrderItem) entity.OrderItem {
 	return entity.OrderItem{
 		BookID:   uint(dto.BookId),
 		Quantity: dto.Quantity,
-		Price:    dto.Price,
 	}
 }
 
-func TotalAmount(o dto.Order) float64 {
+func TotalAmount(totals []float64) float64 {
 	var total float64
-	for _, item := range o.OrderItems {
-		total += item.Price * float64(item.Quantity)
+	for _, t := range totals {
+		total += t
 	}
 	return total
 }
 
-func OrderToEntity(ctx context.Context, dto dto.Order) entity.Order {
-	total := TotalAmount(dto)
+func OrderToEntity(ctx context.Context, dto dto.Order, total float64) entity.Order {
 	userID := ctx.Value(constant.UserIDKey).(int)
 	return entity.Order{
 		UserID:     uint(userID),
