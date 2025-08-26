@@ -114,13 +114,47 @@ func (r *bookRepo) GetBookById(ctx context.Context, payload int) (entity.Book, e
 func (r *bookRepo) UpdateBook(ctx context.Context, id int, payload entity.Book) error {
 	r.log.Info("update book in repo", id)
 
-	err := r.db.WithContext(ctx).Where("id = ?", id).Updates(&payload).Error
+	updates := map[string]interface{}{}
+
+	if payload.Title != "" {
+		updates["title"] = payload.Title
+	}
+	if payload.Author != "" {
+		updates["author"] = payload.Author
+	}
+	if payload.Price > 0 {
+		updates["price"] = payload.Price
+	}
+	if payload.Stock > 0 {
+		updates["stock"] = payload.Stock
+	}
+	if payload.Year > 0 {
+		updates["year"] = payload.Year
+	}
+	if payload.CategoryID > 0 {
+		updates["category_id"] = payload.CategoryID
+	}
+	if payload.ImageBase64 != "" {
+		updates["image_base64"] = payload.ImageBase64
+	}
+
+	if len(updates) == 0 {
+		r.log.Info("No fields to update, skip update", payload)
+		return nil
+	}
+
+	err := r.db.WithContext(ctx).
+		Model(&entity.Book{}).
+		Where("id = ?", id).
+		Updates(updates).Error
 	if err != nil {
 		r.log.Error("Error : ", err)
 		return fmt.Errorf(constant.ErrorServerUpdate)
 	}
+
 	return nil
 }
+
 func (r *bookRepo) DeleteBook(ctx context.Context, payload int) error {
 	r.log.Info("delete book in repo", payload)
 
